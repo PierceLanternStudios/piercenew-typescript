@@ -1,6 +1,6 @@
 {
   "name": "piercenew",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The official TypeScript library for the Piercenew API",
   "author": "Piercenew <>",
   "types": "dist/index.d.ts",
