@@ -60,7 +60,7 @@ $ yarn link piercenew
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global piercenew
+$ pnpm link --global piercenew
 ```
 
 ## Running tests
