@@ -9,11 +9,9 @@ import {
 } from '@modelcontextprotocol/sdk/types.js';
 import { ClientOptions } from 'piercenew';
 import Piercenew from 'piercenew';
-import { codeTool } from './code-tool';
 import docsSearchTool from './docs-search-tool';
 import { getInstructions } from './instructions';
 import { McpOptions } from './options';
-import { blockedMethodsForCodeTool } from './methods';
 import { HandlerFunction, McpRequestContext, ToolCallResult, McpTool } from './types';
 
 export const newMcpServer = async (stainlessApiKey: string | undefined) =>
@@ -156,12 +154,8 @@ export async function initMcpServer(params: {
  * Selects the tools to include in the MCP Server based on the provided options.
  */
 export function selectTools(options?: McpOptions): McpTool[] {
-  const includedTools = [
-    codeTool({
-      blockedMethods: blockedMethodsForCodeTool(options),
-      codeExecutionMode: options?.codeExecutionMode ?? 'stainless-sandbox',
-    }),
-  ];
+  const includedTools = [];
+
   if (options?.includeDocsTools ?? true) {
     includedTools.push(docsSearchTool);
   }
