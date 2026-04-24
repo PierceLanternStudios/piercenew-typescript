@@ -4,49 +4,49 @@ import Piercenew from 'piercenew';
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 
 type TextContentBlock = {
-  type: 'text';
-  text: string;
-};
+  type: "text",
+  text: string
+}
 
 type ImageContentBlock = {
-  type: 'image';
-  data: string;
-  mimeType: string;
-};
+  type: "image",
+  data: string,
+  mimeType: string
+}
 
 type AudioContentBlock = {
-  type: 'audio';
-  data: string;
-  mimeType: string;
-};
+  type: "audio",
+  data: string,
+  mimeType: string
+}
 
 type ResourceContentBlock = {
-  type: 'resource';
-  resource:
-    | {
-        uri: string;
-        mimeType: string;
-        text: string;
-      }
-    | {
-        uri: string;
-        mimeType: string;
-        blob: string;
-      };
-};
+  type: "resource",
+  resource: {
+    uri: string,
+    mimeType: string,
+    text: string
+  } | {
+    uri: string,
+    mimeType: string,
+    blob: string
+  }
+}
 
 export type ContentBlock = TextContentBlock | ImageContentBlock | AudioContentBlock | ResourceContentBlock;
 
 export type ToolCallResult = {
   content: ContentBlock[];
   isError?: boolean;
-};
+}
 
 export type McpRequestContext = {
   client: Piercenew;
   stainlessApiKey?: string | undefined;
   upstreamClientEnvs?: Record<string, string> | undefined;
-};
+  mcpSessionId?: string | undefined;
+  mcpClientInfo?: { name: string; version: string } | undefined;
+}
 
 export type HandlerFunction = ({
   reqContext,
@@ -56,7 +56,9 @@ export type HandlerFunction = ({
   args: Record<string, unknown> | undefined;
 }) => Promise<ToolCallResult>;
 
-export function asTextContentResult(result: unknown): ToolCallResult {
+export function asTextContentResult(
+  result: unknown,
+): ToolCallResult {
   return {
     content: [
       {
@@ -67,18 +69,24 @@ export function asTextContentResult(result: unknown): ToolCallResult {
   };
 }
 
-export async function asBinaryContentResult(response: Response): Promise<ToolCallResult> {
+export async function asBinaryContentResult(
+  response: Response,
+): Promise<ToolCallResult> {
   const blob = await response.blob();
   const mimeType = blob.type;
   const data = Buffer.from(await blob.arrayBuffer()).toString('base64');
   if (mimeType.startsWith('image/')) {
     return {
-      content: [{ type: 'image', mimeType, data }],
-    };
+      content: [
+        {type: 'image', mimeType, data}
+      ]
+    }
   } else if (mimeType.startsWith('audio/')) {
     return {
-      content: [{ type: 'audio', mimeType, data }],
-    };
+      content: [
+        {type: 'audio', mimeType, data}
+      ]
+    }
   } else {
     return {
       content: [
@@ -96,7 +104,9 @@ export async function asBinaryContentResult(response: Response): Promise<ToolCal
   }
 }
 
-export function asErrorResult(message: string): ToolCallResult {
+export function asErrorResult(
+  message: string
+): ToolCallResult {
   return {
     content: [
       {
@@ -118,7 +128,7 @@ export type Metadata = {
 };
 
 export type McpTool = {
-  metadata: Metadata;
-  tool: Tool;
-  handler: HandlerFunction;
+  metadata: Metadata,
+  tool: Tool,
+  handler: HandlerFunction
 };

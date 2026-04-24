@@ -3,34 +3,33 @@
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import {
-  CallToolRequestSchema,
-  ListToolsRequestSchema,
-  SetLevelRequestSchema,
+  CallToolRequestSchema,ListToolsRequestSchema,SetLevelRequestSchema
 } from '@modelcontextprotocol/sdk/types.js';
 import { ClientOptions } from 'piercenew';
 import Piercenew from 'piercenew';
 import docsSearchTool from './docs-search-tool';
+import { setLocalSearch } from './docs-search-tool';
+import { LocalDocsSearch } from './local-docs-search';
 import { getInstructions } from './instructions';
 import { McpOptions } from './options';
-import { HandlerFunction, McpRequestContext, ToolCallResult, McpTool } from './types';
+import { HandlerFunction, McpRequestContext, ToolCallResult, McpTool } from "./types"
 
 export const newMcpServer = async ({
   stainlessApiKey,
   customInstructionsPath,
 }: {
-  stainlessApiKey?: string | undefined;
-  customInstructionsPath?: string | undefined;
-}) =>
-  new McpServer(
-    {
-      name: 'piercenew_api',
-      version: '0.1.0',
-    },
-    {
-      instructions: await getInstructions({ stainlessApiKey, customInstructionsPath }),
-      capabilities: { tools: {}, logging: {} },
-    },
-  );
+  stainlessApiKey?: string | undefined,
+  customInstructionsPath?: string | undefined,
+}) => new McpServer(
+  {
+    name: 'piercenew_api',
+    version: '0.1.0',
+  },
+  {
+    instructions: await getInstructions({stainlessApiKey, customInstructionsPath}),
+    capabilities: { tools: {}, logging: {} },
+  }
+);
 
 /**
  * Initializes the provided MCP Server with the given tools and handlers.
@@ -42,6 +41,8 @@ export async function initMcpServer(params: {
   mcpOptions?: McpOptions;
   stainlessApiKey?: string | undefined;
   upstreamClientEnvs?: Record<string, string> | undefined;
+  mcpSessionId?: string | undefined;
+  mcpClientInfo?: { name: string; version: string } | undefined;
 }) {
   const server = params.server instanceof McpServer ? params.server.server : params.server;
 
@@ -50,15 +51,21 @@ export async function initMcpServer(params: {
     (message: string, ...rest: unknown[]) => {
       void server.sendLoggingMessage({
         level,
-        data: { message, rest },
+        data: {message, rest},
       });
-    };
+    }
   const logger = {
-    debug: logAtLevel('debug'),
-    info: logAtLevel('info'),
-    warn: logAtLevel('warning'),
-    error: logAtLevel('error'),
-  };
+    debug: logAtLevel("debug"),
+    info: logAtLevel("info"),
+    warn: logAtLevel("warning"),
+    error: logAtLevel("error"),
+  }
+
+  if (params.mcpOptions?.docsSearchMode === 'local') {
+    const docsDir = params.mcpOptions?.docsDir;
+    const localSearch = await LocalDocsSearch.create(docsDir ? { docsDir } : undefined);
+    setLocalSearch(localSearch);
+  }
 
   let _client: Piercenew | undefined;
   let _clientError: Error | undefined;
@@ -69,13 +76,14 @@ export async function initMcpServer(params: {
     if (!_client) {
       try {
         _client = new Piercenew({
-          logger,
-          ...params.clientOptions,
-          defaultHeaders: {
-            ...params.clientOptions?.defaultHeaders,
-            'X-Stainless-MCP': 'true',
-          },
-        });
+
+  logger,
+  ...params.clientOptions,
+  defaultHeaders: {
+    ...params.clientOptions?.defaultHeaders,
+    'X-Stainless-MCP': 'true',
+  },
+});
         if (_logLevel) {
           _client = _client.withOptions({ logLevel: _logLevel });
         }
@@ -108,12 +116,10 @@ export async function initMcpServer(params: {
       client = getClient();
     } catch (error) {
       return {
-        content: [
-          {
-            type: 'text' as const,
-            text: `Failed to initialize client: ${error instanceof Error ? error.message : String(error)}`,
-          },
-        ],
+        content: [{
+          type: 'text' as const,
+          text: `Failed to initialize client: ${error instanceof Error ? error.message : String(error)}`,
+        }],
         isError: true,
       };
     }
@@ -124,6 +130,8 @@ export async function initMcpServer(params: {
         client,
         stainlessApiKey: params.stainlessApiKey ?? params.mcpOptions?.stainlessApiKey,
         upstreamClientEnvs: params.upstreamClientEnvs,
+        mcpSessionId: params.mcpSessionId,
+        mcpClientInfo: params.mcpClientInfo,
       },
       args,
     });
@@ -161,7 +169,10 @@ export async function initMcpServer(params: {
 /**
  * Selects the tools to include in the MCP Server based on the provided options.
  */
-export function selectTools(options?: McpOptions): McpTool[] {
+export function selectTools(
+  options?: McpOptions
+): McpTool[] {
+
   const includedTools = [];
 
   if (options?.includeDocsTools ?? true) {
@@ -173,14 +184,13 @@ export function selectTools(options?: McpOptions): McpTool[] {
 /**
  * Runs the provided handler with the given client and arguments.
  */
-export async function executeHandler({
-  handler,
-  reqContext,
-  args,
-}: {
-  handler: HandlerFunction;
-  reqContext: McpRequestContext;
-  args: Record<string, unknown> | undefined;
-}): Promise<ToolCallResult> {
-  return await handler({ reqContext, args: args || {} });
+export async function executeHandler(
+  {handler, reqContext, args}:
+  {
+    handler: HandlerFunction;
+    reqContext: McpRequestContext;
+    args: Record<string, unknown> | undefined;
+  }
+): Promise<ToolCallResult> {
+  return await handler({reqContext, args: args || {}});
 }
