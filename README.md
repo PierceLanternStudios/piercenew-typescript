@@ -1,4 +1,4 @@
-# Piercenew TypeScript API Library
+# PiercenewCUSTOM TypeScript API Library
 
 [![NPM version](<https://img.shields.io/npm/v/piercenew.svg?label=npm%20(stable)>)](https://npmjs.org/package/piercenew) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/piercenew)
 
