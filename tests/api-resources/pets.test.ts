@@ -9,42 +9,6 @@ const client = new Piercenew({
 
 describe('resource pets', () => {
   // Mock server tests are disabled
-  test.skip('create: only required params', async () => {
-    const responsePromise = client.pets.create({ name: 'doggie', photoUrls: ['string'] });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('create: required and optional params', async () => {
-    const response = await client.pets.create({
-      name: 'doggie',
-      photoUrls: ['string'],
-      id: 10,
-      category: { id: 1, name: 'Dogs' },
-      status: 'available',
-      tags: [{ id: 0, name: 'name' }],
-    });
-  });
-
-  // Mock server tests are disabled
-  test.skip('retrieve', async () => {
-    const responsePromise = client.pets.retrieve(0);
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.pets.update({ name: 'doggie', photoUrls: ['string'] });
     const rawResponse = await responsePromise.asResponse();
@@ -69,8 +33,8 @@ describe('resource pets', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('delete', async () => {
-    const responsePromise = client.pets.delete(0);
+  test.skip('create: only required params', async () => {
+    const responsePromise = client.pets.create({ name: 'doggie', photoUrls: ['string'] });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -78,6 +42,18 @@ describe('resource pets', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('create: required and optional params', async () => {
+    const response = await client.pets.create({
+      name: 'doggie',
+      photoUrls: ['string'],
+      id: 10,
+      category: { id: 1, name: 'Dogs' },
+      status: 'available',
+      tags: [{ id: 0, name: 'name' }],
+    });
   });
 
   // Mock server tests are disabled
@@ -121,6 +97,18 @@ describe('resource pets', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('retrieve', async () => {
+    const responsePromise = client.pets.retrieve(0);
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
   test.skip('updateByID', async () => {
     const responsePromise = client.pets.updateByID(0);
     const rawResponse = await responsePromise.asResponse();
@@ -138,6 +126,18 @@ describe('resource pets', () => {
     await expect(
       client.pets.updateByID(0, { name: 'name', status: 'status' }, { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(Piercenew.NotFoundError);
+  });
+
+  // Mock server tests are disabled
+  test.skip('delete', async () => {
+    const responsePromise = client.pets.delete(0);
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
   });
 
   // Mock server tests are disabled

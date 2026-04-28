@@ -778,8 +778,8 @@ export declare namespace Piercenew {
     type PetFindByStatusResponse as PetFindByStatusResponse,
     type PetFindByTagsResponse as PetFindByTagsResponse,
     type PetUploadImageResponse as PetUploadImageResponse,
-    type PetCreateParams as PetCreateParams,
     type PetUpdateParams as PetUpdateParams,
+    type PetCreateParams as PetCreateParams,
     type PetFindByStatusParams as PetFindByStatusParams,
     type PetFindByTagsParams as PetFindByTagsParams,
     type PetUpdateByIDParams as PetUpdateByIDParams,
@@ -793,9 +793,9 @@ export declare namespace Piercenew {
     type User as User,
     type UserLoginResponse as UserLoginResponse,
     type UserCreateParams as UserCreateParams,
-    type UserUpdateParams as UserUpdateParams,
     type UserCreateWithListParams as UserCreateWithListParams,
     type UserLoginParams as UserLoginParams,
+    type UserUpdateParams as UserUpdateParams,
   };
 
   export type Order = API.Order;

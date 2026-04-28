@@ -11,28 +11,16 @@ export type SdkMethod = {
 
 export const sdkMethods: SdkMethod[] = [
   {
-    clientCallName: 'client.pets.create',
-    fullyQualifiedName: 'pets.create',
-    httpMethod: 'post',
-    httpPath: '/pet',
-  },
-  {
-    clientCallName: 'client.pets.retrieve',
-    fullyQualifiedName: 'pets.retrieve',
-    httpMethod: 'get',
-    httpPath: '/pet/{petId}',
-  },
-  {
     clientCallName: 'client.pets.update',
     fullyQualifiedName: 'pets.update',
     httpMethod: 'put',
     httpPath: '/pet',
   },
   {
-    clientCallName: 'client.pets.delete',
-    fullyQualifiedName: 'pets.delete',
-    httpMethod: 'delete',
-    httpPath: '/pet/{petId}',
+    clientCallName: 'client.pets.create',
+    fullyQualifiedName: 'pets.create',
+    httpMethod: 'post',
+    httpPath: '/pet',
   },
   {
     clientCallName: 'client.pets.findByStatus',
@@ -47,9 +35,21 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/pet/findByTags',
   },
   {
+    clientCallName: 'client.pets.retrieve',
+    fullyQualifiedName: 'pets.retrieve',
+    httpMethod: 'get',
+    httpPath: '/pet/{petId}',
+  },
+  {
     clientCallName: 'client.pets.updateByID',
     fullyQualifiedName: 'pets.updateByID',
     httpMethod: 'post',
+    httpPath: '/pet/{petId}',
+  },
+  {
+    clientCallName: 'client.pets.delete',
+    fullyQualifiedName: 'pets.delete',
+    httpMethod: 'delete',
     httpPath: '/pet/{petId}',
   },
   {
@@ -89,24 +89,6 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/user',
   },
   {
-    clientCallName: 'client.users.retrieve',
-    fullyQualifiedName: 'users.retrieve',
-    httpMethod: 'get',
-    httpPath: '/user/{username}',
-  },
-  {
-    clientCallName: 'client.users.update',
-    fullyQualifiedName: 'users.update',
-    httpMethod: 'put',
-    httpPath: '/user/{username}',
-  },
-  {
-    clientCallName: 'client.users.delete',
-    fullyQualifiedName: 'users.delete',
-    httpMethod: 'delete',
-    httpPath: '/user/{username}',
-  },
-  {
     clientCallName: 'client.users.createWithList',
     fullyQualifiedName: 'users.createWithList',
     httpMethod: 'post',
@@ -123,6 +105,24 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'users.logout',
     httpMethod: 'get',
     httpPath: '/user/logout',
+  },
+  {
+    clientCallName: 'client.users.retrieve',
+    fullyQualifiedName: 'users.retrieve',
+    httpMethod: 'get',
+    httpPath: '/user/{username}',
+  },
+  {
+    clientCallName: 'client.users.update',
+    fullyQualifiedName: 'users.update',
+    httpMethod: 'put',
+    httpPath: '/user/{username}',
+  },
+  {
+    clientCallName: 'client.users.delete',
+    fullyQualifiedName: 'users.delete',
+    httpMethod: 'delete',
+    httpPath: '/user/{username}',
   },
 ];
 

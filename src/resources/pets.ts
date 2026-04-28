@@ -11,33 +11,6 @@ import { path } from '../internal/utils/path';
  */
 export class Pets extends APIResource {
   /**
-   * Add a new pet to the store
-   *
-   * @example
-   * ```ts
-   * const pet = await client.pets.create({
-   *   name: 'doggie',
-   *   photoUrls: ['string'],
-   * });
-   * ```
-   */
-  create(body: PetCreateParams, options?: RequestOptions): APIPromise<Pet> {
-    return this._client.post('/pet', { body, ...options });
-  }
-
-  /**
-   * Returns a single pet
-   *
-   * @example
-   * ```ts
-   * const pet = await client.pets.retrieve(0);
-   * ```
-   */
-  retrieve(petID: number, options?: RequestOptions): APIPromise<Pet> {
-    return this._client.get(path`/pet/${petID}`, options);
-  }
-
-  /**
    * Update an existing pet by Id
    *
    * @example
@@ -53,18 +26,18 @@ export class Pets extends APIResource {
   }
 
   /**
-   * delete a pet
+   * Add a new pet to the store
    *
    * @example
    * ```ts
-   * await client.pets.delete(0);
+   * const pet = await client.pets.create({
+   *   name: 'doggie',
+   *   photoUrls: ['string'],
+   * });
    * ```
    */
-  delete(petID: number, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/pet/${petID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+  create(body: PetCreateParams, options?: RequestOptions): APIPromise<Pet> {
+    return this._client.post('/pet', { body, ...options });
   }
 
   /**
@@ -99,6 +72,18 @@ export class Pets extends APIResource {
   }
 
   /**
+   * Returns a single pet
+   *
+   * @example
+   * ```ts
+   * const pet = await client.pets.retrieve(0);
+   * ```
+   */
+  retrieve(petID: number, options?: RequestOptions): APIPromise<Pet> {
+    return this._client.get(path`/pet/${petID}`, options);
+  }
+
+  /**
    * Updates a pet in the store with form data
    *
    * @example
@@ -114,6 +99,21 @@ export class Pets extends APIResource {
     const { name, status } = params ?? {};
     return this._client.post(path`/pet/${petID}`, {
       query: { name, status },
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
+
+  /**
+   * delete a pet
+   *
+   * @example
+   * ```ts
+   * await client.pets.delete(0);
+   * ```
+   */
+  delete(petID: number, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/pet/${petID}`, {
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
@@ -189,31 +189,6 @@ export interface PetUploadImageResponse {
   type?: string;
 }
 
-export interface PetCreateParams {
-  name: string;
-
-  photoUrls: Array<string>;
-
-  id?: number;
-
-  category?: Category;
-
-  /**
-   * pet status in the store
-   */
-  status?: 'available' | 'pending' | 'sold';
-
-  tags?: Array<PetCreateParams.Tag>;
-}
-
-export namespace PetCreateParams {
-  export interface Tag {
-    id?: number;
-
-    name?: string;
-  }
-}
-
 export interface PetUpdateParams {
   name: string;
 
@@ -232,6 +207,31 @@ export interface PetUpdateParams {
 }
 
 export namespace PetUpdateParams {
+  export interface Tag {
+    id?: number;
+
+    name?: string;
+  }
+}
+
+export interface PetCreateParams {
+  name: string;
+
+  photoUrls: Array<string>;
+
+  id?: number;
+
+  category?: Category;
+
+  /**
+   * pet status in the store
+   */
+  status?: 'available' | 'pending' | 'sold';
+
+  tags?: Array<PetCreateParams.Tag>;
+}
+
+export namespace PetCreateParams {
   export interface Tag {
     id?: number;
 
@@ -279,8 +279,8 @@ export declare namespace Pets {
     type PetFindByStatusResponse as PetFindByStatusResponse,
     type PetFindByTagsResponse as PetFindByTagsResponse,
     type PetUploadImageResponse as PetUploadImageResponse,
-    type PetCreateParams as PetCreateParams,
     type PetUpdateParams as PetUpdateParams,
+    type PetCreateParams as PetCreateParams,
     type PetFindByStatusParams as PetFindByStatusParams,
     type PetFindByTagsParams as PetFindByTagsParams,
     type PetUpdateByIDParams as PetUpdateByIDParams,
