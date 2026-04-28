@@ -8,8 +8,8 @@ export {
   type PetFindByStatusResponse,
   type PetFindByTagsResponse,
   type PetUploadImageResponse,
-  type PetCreateParams,
   type PetUpdateParams,
+  type PetCreateParams,
   type PetFindByStatusParams,
   type PetFindByTagsParams,
   type PetUpdateByIDParams,
@@ -21,7 +21,7 @@ export {
   type User,
   type UserLoginResponse,
   type UserCreateParams,
-  type UserUpdateParams,
   type UserCreateWithListParams,
   type UserLoginParams,
+  type UserUpdateParams,
 } from './users';
