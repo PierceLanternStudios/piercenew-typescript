@@ -1,4 +1,4 @@
-# Dockerfile for Piercenew MCP Server
+# Dockerfile for Piercenew Changeinconfig MCP Server
 #
 # This Dockerfile builds a Docker image for the MCP Server.
 #

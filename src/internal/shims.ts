@@ -16,7 +16,7 @@ export function getDefaultFetch(): Fetch {
   }
 
   throw new Error(
-    '`fetch` is not defined as a global; Either pass `fetch` to the client, `new Piercenew({ fetch })` or polyfill the global, `globalThis.fetch = fetch`',
+    '`fetch` is not defined as a global; Either pass `fetch` to the client, `new PiercenewChangeinconfig({ fetch })` or polyfill the global, `globalThis.fetch = fetch`',
   );
 }
 
