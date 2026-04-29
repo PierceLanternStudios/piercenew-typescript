@@ -8,7 +8,7 @@ import {
   SetLevelRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
 import { ClientOptions } from 'piercenew';
-import Piercenew from 'piercenew';
+import PiercenewChangeinconfig from 'piercenew';
 import docsSearchTool from './docs-search-tool';
 import { setLocalSearch } from './docs-search-tool';
 import { LocalDocsSearch } from './local-docs-search';
@@ -70,15 +70,15 @@ export async function initMcpServer(params: {
     setLocalSearch(localSearch);
   }
 
-  let _client: Piercenew | undefined;
+  let _client: PiercenewChangeinconfig | undefined;
   let _clientError: Error | undefined;
   let _logLevel: 'debug' | 'info' | 'warn' | 'error' | 'off' | undefined;
 
-  const getClient = (): Piercenew => {
+  const getClient = (): PiercenewChangeinconfig => {
     if (_clientError) throw _clientError;
     if (!_client) {
       try {
-        _client = new Piercenew({
+        _client = new PiercenewChangeinconfig({
           logger,
           ...params.clientOptions,
           defaultHeaders: {
@@ -113,7 +113,7 @@ export async function initMcpServer(params: {
       throw new Error(`Unknown tool: ${name}`);
     }
 
-    let client: Piercenew;
+    let client: PiercenewChangeinconfig;
     try {
       client = getClient();
     } catch (error) {

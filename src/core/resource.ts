@@ -1,11 +1,11 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import type { Piercenew } from '../client';
+import type { PiercenewChangeinconfig } from '../client';
 
 export abstract class APIResource {
-  protected _client: Piercenew;
+  protected _client: PiercenewChangeinconfig;
 
-  constructor(client: Piercenew) {
+  constructor(client: PiercenewChangeinconfig) {
     this._client = client;
   }
 }

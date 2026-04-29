@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { type Piercenew } from '../client';
+import { type PiercenewChangeinconfig } from '../client';
 
 import { type PromiseOrValue } from '../internal/types';
 import { APIResponseProps, defaultParseResponse } from '../internal/parse';
@@ -11,13 +11,13 @@ import { APIResponseProps, defaultParseResponse } from '../internal/parse';
  */
 export class APIPromise<T> extends Promise<T> {
   private parsedPromise: Promise<T> | undefined;
-  #client: Piercenew;
+  #client: PiercenewChangeinconfig;
 
   constructor(
-    client: Piercenew,
+    client: PiercenewChangeinconfig,
     private responsePromise: Promise<APIResponseProps>,
     private parseResponse: (
-      client: Piercenew,
+      client: PiercenewChangeinconfig,
       props: APIResponseProps,
     ) => PromiseOrValue<T> = defaultParseResponse,
   ) {

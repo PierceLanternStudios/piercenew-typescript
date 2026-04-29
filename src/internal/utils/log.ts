@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { hasOwn } from './values';
-import { type Piercenew } from '../../client';
+import { type PiercenewChangeinconfig } from '../../client';
 import { RequestOptions } from '../request-options';
 
 type LogFn = (message: string, ...rest: unknown[]) => void;
@@ -24,7 +24,7 @@ const levelNumbers = {
 export const parseLogLevel = (
   maybeLevel: string | undefined,
   sourceName: string,
-  client: Piercenew,
+  client: PiercenewChangeinconfig,
 ): LogLevel | undefined => {
   if (!maybeLevel) {
     return undefined;
@@ -60,7 +60,7 @@ const noopLogger = {
 
 let cachedLoggers = /* @__PURE__ */ new WeakMap<Logger, [LogLevel, Logger]>();
 
-export function loggerFor(client: Piercenew): Logger {
+export function loggerFor(client: PiercenewChangeinconfig): Logger {
   const logger = client.logger;
   const logLevel = client.logLevel ?? 'off';
   if (!logger) {

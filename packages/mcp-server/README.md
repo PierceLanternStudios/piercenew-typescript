@@ -1,4 +1,4 @@
-# Piercenew TypeScript MCP Server
+# Piercenew Changeinconfig TypeScript MCP Server
 
 It is generated with [Stainless](https://www.stainless.com/).
 
